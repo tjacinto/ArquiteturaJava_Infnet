@@ -3,33 +3,38 @@ package br.edu.infnet.appvenda;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import br.edu.infnet.appvenda.model.domain.Eletroportateis;
+import br.edu.infnet.appvenda.model.service.EletroportateisService;
 
 @Order(4)
 @Component
 public class EletroportateisLoader implements ApplicationRunner {
-	
+
+	@Autowired
+	private EletroportateisService eletroportateisService;
+
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		
-		FileReader file = new FileReader("files/eletroportateis.txt");		
+
+		FileReader file = new FileReader("files/eletroportateis.txt");
 		BufferedReader leitura = new BufferedReader(file);
-		
+
 		String linha = leitura.readLine();
 
 		String[] campos = null;
 
-		while(linha != null) {
-			
+		while (linha != null) {
+
 			campos = linha.split(";");
-			
+
 			Eletroportateis eletroportateis = new Eletroportateis();
-			
+
 			eletroportateis.setCodigo(Integer.valueOf(campos[0]));
 			eletroportateis.setDescricao(campos[1]);
 			eletroportateis.setEstoque(Boolean.valueOf(campos[2]));
@@ -38,11 +43,13 @@ public class EletroportateisLoader implements ApplicationRunner {
 			eletroportateis.setModelo(campos[5]);
 			eletroportateis.setVoltagem(Integer.valueOf(campos[6]));
 			eletroportateis.setBateria(campos[7]);
-									
+
+			eletroportateisService.incluir(eletroportateis);
 			linha = leitura.readLine();
-			System.out.println("[Eletroportateis] " + eletroportateis);	
 		}
-		
-		leitura.close();
+
+		for (Eletroportateis eletroportateis : eletroportateisService.obterLista()) {
+			System.out.println("[Smartphones] " + eletroportateis);
+		}
 	}
 }

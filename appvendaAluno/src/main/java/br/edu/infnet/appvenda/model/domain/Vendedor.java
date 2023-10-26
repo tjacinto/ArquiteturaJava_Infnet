@@ -1,9 +1,12 @@
 package br.edu.infnet.appvenda.model.domain;
 
+import java.util.List;
+
 public class Vendedor {
-	String nome;
-	String cpf;
-	String email;
+	private String nome;
+	private String cpf;
+	private String email;
+	private List<Produto> produtos;
 	
 	@Override
 	public String toString() {
@@ -27,5 +30,13 @@ public class Vendedor {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
 	}
 }
