@@ -1,4 +1,4 @@
-123;descricao 1;true;99;apple;teste;12;128;S
-1234;descricao 2;true;100;apple 2;teste;12;256;S
-847;ELETRO 3;true;500;eletrolux;coktop;120;eletrica;E
-823;ELETROABS 7;false;700;brastemp;6 bocas;220;diesel;E
+123;descricao 1;true;99;apple;teste;12;128;S;3
+1234;descricao 2;true;100;apple 2;teste;12;256;S;3
+847;ELETRO 3;true;500;eletrolux;coktop;120;eletrica;E;4
+823;ELETROABS 7;false;700;brastemp;6 bocas;220;diesel;E;4

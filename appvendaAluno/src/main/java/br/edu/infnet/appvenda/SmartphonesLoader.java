@@ -10,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import br.edu.infnet.appvenda.model.domain.Smartphones;
+import br.edu.infnet.appvenda.model.domain.Vendedor;
 import br.edu.infnet.appvenda.model.service.SmartphonesService;
 
 @Order(3)
@@ -28,6 +29,7 @@ public class SmartphonesLoader implements ApplicationRunner {
 		String linha = leitura.readLine();
 
 		String[] campos = null;
+		Vendedor vendedor = new Vendedor();
 
 		while(linha != null) {
 			
@@ -43,6 +45,10 @@ public class SmartphonesLoader implements ApplicationRunner {
 			smartphones.setModelo(campos[5]);
 			smartphones.setGarantiaMeses(Integer.valueOf(campos[6]));
 			smartphones.setArmazenamento(Integer.valueOf(campos[7]));
+			
+			vendedor.setId(Integer.valueOf(campos[8]));
+			
+			smartphones.setVendedor(vendedor);
 			
 			smartphonesService.incluir(smartphones);				
 			linha = leitura.readLine();

@@ -10,6 +10,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import br.edu.infnet.appvenda.model.domain.Eletroportateis;
+import br.edu.infnet.appvenda.model.domain.Vendedor;
 import br.edu.infnet.appvenda.model.service.EletroportateisService;
 
 @Order(4)
@@ -23,33 +24,38 @@ public class EletroportateisLoader implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 
 		FileReader file = new FileReader("files/eletroportateis.txt");
-		BufferedReader leitura = new BufferedReader(file);
+		try (BufferedReader leitura = new BufferedReader(file)) {
+			String linha = leitura.readLine();
 
-		String linha = leitura.readLine();
+			String[] campos = null;
+			Vendedor vendedor = new Vendedor();
 
-		String[] campos = null;
+			while (linha != null) {
 
-		while (linha != null) {
+				campos = linha.split(";");
 
-			campos = linha.split(";");
+				Eletroportateis eletroportateis = new Eletroportateis();
 
-			Eletroportateis eletroportateis = new Eletroportateis();
+				eletroportateis.setCodigo(Integer.valueOf(campos[0]));
+				eletroportateis.setDescricao(campos[1]);
+				eletroportateis.setEstoque(Boolean.valueOf(campos[2]));
+				eletroportateis.setPreco(Float.valueOf(campos[3]));
+				eletroportateis.setFabricante(campos[4]);
+				eletroportateis.setModelo(campos[5]);
+				eletroportateis.setVoltagem(Integer.valueOf(campos[6]));
+				eletroportateis.setBateria(campos[7]);
+				
+				vendedor.setId(Integer.valueOf(campos[8]));
+				
+				eletroportateis.setVendedor(vendedor);
 
-			eletroportateis.setCodigo(Integer.valueOf(campos[0]));
-			eletroportateis.setDescricao(campos[1]);
-			eletroportateis.setEstoque(Boolean.valueOf(campos[2]));
-			eletroportateis.setPreco(Float.valueOf(campos[3]));
-			eletroportateis.setFabricante(campos[4]);
-			eletroportateis.setModelo(campos[5]);
-			eletroportateis.setVoltagem(Integer.valueOf(campos[6]));
-			eletroportateis.setBateria(campos[7]);
-
-			eletroportateisService.incluir(eletroportateis);
-			linha = leitura.readLine();
+				eletroportateisService.incluir(eletroportateis);
+				linha = leitura.readLine();
+			}
 		}
 
 		for (Eletroportateis eletroportateis : eletroportateisService.obterLista()) {
-			System.out.println("[Smartphones] " + eletroportateis);
+			System.out.println("[Eletroportateis] " + eletroportateis);
 		}
 	}
 }

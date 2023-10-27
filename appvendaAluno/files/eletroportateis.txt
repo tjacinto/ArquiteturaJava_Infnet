@@ -1,2 +1,2 @@
-847;ELETRO 3;true;500;eletrolux;coktop;120;eletrica
-823;ELETROABS 7;false;700;brastemp;6 bocas;220;diesel
+847;ELETRO 3;true;500;eletrolux;coktop;120;eletrica;4
+823;ELETROABS 7;false;700;brastemp;6 bocas;220;diesel;4

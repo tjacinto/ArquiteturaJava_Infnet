@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import br.edu.infnet.appvenda.model.domain.Eletroportateis;
 import br.edu.infnet.appvenda.model.domain.Produto;
 import br.edu.infnet.appvenda.model.domain.Smartphones;
+import br.edu.infnet.appvenda.model.domain.Vendedor;
 import br.edu.infnet.appvenda.model.service.ProdutoService;
 
 @Order(2)
@@ -25,56 +26,63 @@ public class ProdutoLoader implements ApplicationRunner {
 	public void run(ApplicationArguments args) throws Exception {
 		
 		FileReader file = new FileReader("files/produtos.txt");		
-		BufferedReader leitura = new BufferedReader(file);
-		
-		String linha = leitura.readLine();
+		try (BufferedReader leitura = new BufferedReader(file)) {
+			String linha = leitura.readLine();
 
-		String[] campos = null;
+			String[] campos = null;
+			Vendedor vendedor = new Vendedor();
 
-		while(linha != null) {
-			
-			campos = linha.split(";");
-			
-			switch (campos[8]) {
-			case "S":
-				Smartphones smartphones = new Smartphones();
-				smartphones.setCodigo(Integer.valueOf(campos[0]));
-				smartphones.setDescricao(campos[1]);
-				smartphones.setEstoque(Boolean.valueOf(campos[2]));
-				smartphones.setPreco(Float.valueOf(campos[3]));
-				smartphones.setFabricante(campos[4]);
-				smartphones.setModelo(campos[5]);
-				smartphones.setGarantiaMeses(Integer.valueOf(campos[6]));
-				smartphones.setArmazenamento(Integer.valueOf(campos[7]));
-				System.out.println("[Produtos] " + smartphones + " - " + campos[8]);	
+			while(linha != null) {
 				
-				produtoService.incluir(smartphones);
-				break;
-
-			case "E":
-				Eletroportateis eletroportateis = new Eletroportateis();
-				eletroportateis.setCodigo(Integer.valueOf(campos[0]));
-				eletroportateis.setDescricao(campos[1]);
-				eletroportateis.setEstoque(Boolean.valueOf(campos[2]));
-				eletroportateis.setPreco(Float.valueOf(campos[3]));
-				eletroportateis.setFabricante(campos[4]);
-				eletroportateis.setModelo(campos[5]);
-				eletroportateis.setVoltagem(Integer.valueOf(campos[6]));
-				eletroportateis.setBateria(campos[7]);
-				System.out.println("[Produtos] " + eletroportateis + " - " + campos[8]);	
+				campos = linha.split(";");
 				
-				produtoService.incluir(eletroportateis);
-				break;
+				switch (campos[8]) {
+				case "S":
+					Smartphones smartphones = new Smartphones();
+					smartphones.setCodigo(Integer.valueOf(campos[0]));
+					smartphones.setDescricao(campos[1]);
+					smartphones.setEstoque(Boolean.valueOf(campos[2]));
+					smartphones.setPreco(Float.valueOf(campos[3]));
+					smartphones.setFabricante(campos[4]);
+					smartphones.setModelo(campos[5]);
+					smartphones.setGarantiaMeses(Integer.valueOf(campos[6]));
+					smartphones.setArmazenamento(Integer.valueOf(campos[7]));
+					
+					vendedor.setId(Integer.valueOf(campos[9]));
+					
+					smartphones.setVendedor(vendedor);
 
-			default:
-				break;
+					produtoService.incluir(smartphones);
+					break;
+
+				case "E":
+					Eletroportateis eletroportateis = new Eletroportateis();
+					eletroportateis.setCodigo(Integer.valueOf(campos[0]));
+					eletroportateis.setDescricao(campos[1]);
+					eletroportateis.setEstoque(Boolean.valueOf(campos[2]));
+					eletroportateis.setPreco(Float.valueOf(campos[3]));
+					eletroportateis.setFabricante(campos[4]);
+					eletroportateis.setModelo(campos[5]);
+					eletroportateis.setVoltagem(Integer.valueOf(campos[6]));
+					eletroportateis.setBateria(campos[7]);	
+					
+					vendedor.setId(Integer.valueOf(campos[9]));
+					
+					eletroportateis.setVendedor(vendedor);
+					
+					produtoService.incluir(eletroportateis);
+					break;
+
+				default:
+					break;
+				}
+										
+				linha = leitura.readLine();
 			}
-									
-			linha = leitura.readLine();
 		}
-
+		
 		for (Produto produto : produtoService.obterLista()) {
-			System.out.println("[Produto] " + produto);
+			System.out.println("[Produtos] " + produto);
 		}
 	}
 }
