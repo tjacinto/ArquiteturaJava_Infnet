@@ -9,6 +9,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "TbProduto")
@@ -17,15 +22,30 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String descricao;
+	@Positive
 	private int codigo;
+	@Size(min = 2, max = 100, message = "A descricao deve ter entre {min} e {max} caracteres.")
+	@Pattern(regexp = "^[A-Z]*$", message = "A descricao deve conter apenas letras maiúsculas.")
+	private String descricao;
+	@PositiveOrZero
 	private float preco;
+	@NotNull
 	private boolean estoque;
+	@Size(min = 2, max = 50, message = "O fabricante deve ter entre {min} e {max} caracteres.")
 	private String fabricante;
+	@Size(min = 2, max = 50, message = "O modelo deve ter entre {min} e {max} caracteres.")
 	private String modelo;
 	@ManyToOne
 	@JoinColumn(name = "idVendedor")
 	private Vendedor vendedor;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getFabricante() {
 		return fabricante;
@@ -45,7 +65,8 @@ public class Produto {
 
 	@Override
 	public String toString() {
-		return String.format("%s - %d - %.2f - %s - %s - %s", descricao, codigo, preco, estoque, fabricante, modelo);
+		return String.format("%s - %d - %.2f - %s - %s - %s - vendedor [%s]", descricao, codigo, preco, estoque,
+				fabricante, modelo, vendedor);
 	}
 
 	public String getDescricao() {

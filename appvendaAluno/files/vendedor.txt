@@ -1,5 +1,5 @@
-Thiago Freitas;14444444422;thiago@teste.com.br;1
-Thiago Jacinto;98727272727;jacinto@teste.com.br;1
-Santos Jacinto;12312312122;email@teste.com.br;2
-Freitas Jacinto;78123712837;email.br@teste.com.br;3
-Alan Jacinto;12312312223;alan.email.br@teste.com.br;4
+Thiago Freitas;144.444.444-22;thiago@teste.com.br;20010020
+Thiago Jacinto;987.272.727-27;jacinto@teste.com.br;20010020
+Santos Jacinto;123.123.121-22;email@teste.com.br;20010020
+Freitas Jacinto;781.237.128-37;email.br@teste.com.br;20010020
+Alan Jacinto;123.123.122-23;alan.email.br@teste.com.br;20010020

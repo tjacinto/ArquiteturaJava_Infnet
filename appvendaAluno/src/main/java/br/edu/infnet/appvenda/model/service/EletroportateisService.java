@@ -10,15 +10,23 @@ import br.edu.infnet.appvenda.model.repository.EletroportateisRepository;
 
 @Service
 public class EletroportateisService {
-	
+
 	@Autowired
 	private EletroportateisRepository eletroportateisRepository;
 
 	public void incluir(Eletroportateis eletroportateis) {
 		eletroportateisRepository.save(eletroportateis);
 	}
-	
-	public Collection<Eletroportateis> obterLista(){	
+
+	public Collection<Eletroportateis> obterLista() {
 		return (Collection<Eletroportateis>) eletroportateisRepository.findAll();
+	}
+
+	public long obterQtde() {
+		return eletroportateisRepository.count();
+	}
+
+	public void excluir(Integer id) {
+		eletroportateisRepository.deleteById(id);
 	}
 }

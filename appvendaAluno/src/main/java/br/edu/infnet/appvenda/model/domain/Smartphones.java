@@ -2,12 +2,15 @@ package br.edu.infnet.appvenda.model.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Table(name = "TbSmartphones")
 public class Smartphones extends Produto {
-
+	@PositiveOrZero
 	private int garantiaMeses;
+	@Positive
 	private int armazenamento;
 
 	@Override

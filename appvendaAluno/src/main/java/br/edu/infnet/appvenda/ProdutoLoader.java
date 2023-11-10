@@ -36,7 +36,7 @@ public class ProdutoLoader implements ApplicationRunner {
 				
 				campos = linha.split(";");
 				
-				switch (campos[8]) {
+				switch (campos[9]) {
 				case "S":
 					Smartphones smartphones = new Smartphones();
 					smartphones.setCodigo(Integer.valueOf(campos[0]));
@@ -48,7 +48,7 @@ public class ProdutoLoader implements ApplicationRunner {
 					smartphones.setGarantiaMeses(Integer.valueOf(campos[6]));
 					smartphones.setArmazenamento(Integer.valueOf(campos[7]));
 					
-					vendedor.setId(Integer.valueOf(campos[9]));
+					vendedor.setId(Integer.valueOf(campos[8]));
 					
 					smartphones.setVendedor(vendedor);
 
@@ -66,7 +66,7 @@ public class ProdutoLoader implements ApplicationRunner {
 					eletroportateis.setVoltagem(Integer.valueOf(campos[6]));
 					eletroportateis.setBateria(campos[7]);	
 					
-					vendedor.setId(Integer.valueOf(campos[9]));
+					vendedor.setId(Integer.valueOf(campos[8]));
 					
 					eletroportateis.setVendedor(vendedor);
 					

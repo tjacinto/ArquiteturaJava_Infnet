@@ -10,15 +10,23 @@ import br.edu.infnet.appvenda.model.repository.ProdutoRepository;
 
 @Service
 public class ProdutoService {
-	
+
 	@Autowired
 	private ProdutoRepository produtoRepository;
 
 	public void incluir(Produto produto) {
 		produtoRepository.save(produto);
 	}
-	
-	public Collection<Produto> obterLista(){	
+
+	public Collection<Produto> obterLista() {
 		return (Collection<Produto>) produtoRepository.findAll();
+	}
+
+	public long obterQtde() {
+		return produtoRepository.count();
+	}
+
+	public void excluir(Integer id) {
+		produtoRepository.deleteById(id);
 	}
 }
