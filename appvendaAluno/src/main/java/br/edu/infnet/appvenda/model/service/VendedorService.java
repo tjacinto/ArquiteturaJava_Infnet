@@ -28,6 +28,10 @@ public class VendedorService {
 		vendedorRepository.save(vendedor);
 	}
 
+	public Vendedor pesquisar(String cpf) {
+		return vendedorRepository.findByCpf(cpf);
+	}
+
 	public Collection<Vendedor> obterLista() {
 		return (Collection<Vendedor>) vendedorRepository.findAll();
 	}
